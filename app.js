@@ -19,8 +19,7 @@ app.post("/register", (req, res) => {
     const id = UserRepository.create({ username, password });
     res.send({ id });
   } catch (error) {
-    console.error("Error creating user:", error);
-    res.status(400).send({ error });
+    res.status(400).send( error.message );
   }
 });
 

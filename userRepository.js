@@ -8,14 +8,22 @@ const User = Schema('User',{
     password:{type:String , required:true},
 })
 
-export default class UserRepository {
+export class UserRepository {
   static create({ username, password }) {
-    if(typeof username !== 'string' || typeof password !== 'string') {
-      throw new Error('Invalid input');
+    if(typeof username !== 'string' ) {
+      throw new Error('username must be a string');
     }
 
-    if(username.length < 3 || password.length < 3) {
-      throw new Error('Invalid input');
+    if(typeof password !== 'string'){
+      throw new Error('password must be a string');
+    }
+
+    if(username.length < 3 ) {
+      throw new Error('Username must be at least 3 characters long');
+    }
+
+    if(password.length < 3){
+      throw new Error('Password must be at least 3 characters long');
     }
 
     const user = User.findOne({ username });
@@ -25,7 +33,7 @@ export default class UserRepository {
 
     const id = crypto.randomUUID();
 
-    User.create({ _id:id, username, password });
+    User.create({ _id:id, username, password }).save()
   }
   static login({ username, password }) {}
 }
