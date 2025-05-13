@@ -44,8 +44,9 @@ export class UserRepository {
     }
 
     const id = crypto.randomUUID();
+    const hash = crypto.createHash("sha256").update("your-password").digest("hex");
 
-    User.create({ _id: id, username, password }).save();
+    User.create({ _id: id, username, password:hash }).save();
   }
 
   static findAll() {
@@ -55,6 +56,6 @@ export class UserRepository {
     }
     return users;
   }
-  
+
   static login({ username, password }) {}
 }
